@@ -1,9 +1,10 @@
-import resolve from '@rollup/plugin-node-resolve'
-import typescript from 'rollup-plugin-typescript2'
+import { defineConfig } from 'rollup'
 import babel from '@rollup/plugin-babel'
+import nodeResolve from '@rollup/plugin-node-resolve'
+import typescript from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
-export default {
+export default defineConfig({
   input: 'src/index.ts',
   output: [
     {
@@ -13,11 +14,12 @@ export default {
     {
       file: pkg.module,
       format: 'es',
+      sourcemap: true,
     },
   ],
   plugins: [
+    nodeResolve(),
     typescript(),
-    resolve(),
     babel({
       // 过滤文件
       exclude: 'node_modules/**',
@@ -25,4 +27,4 @@ export default {
     }),
   ],
   external: [/@babel\/runtime/],
-}
+})
