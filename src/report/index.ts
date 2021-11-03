@@ -1,5 +1,6 @@
-import { Options } from 'src'
-import { ErrorInfo, isUrl, obj2query } from 'src/utils'
+import { defaultOptions, Options } from 'src'
+import { ErrorInfo } from 'src/error/parseErrorInfo'
+import { isUrl, obj2query } from 'src/utils'
 
 export type Reporter = (info: ErrorInfo) => void
 type Method = Options['method']
@@ -28,9 +29,14 @@ export const reportError = (url: string, method: Method, info: ErrorInfo) => {
 }
 
 export const createReporter =
-  ({ url, method = 'IMG', onError }: Options): Reporter =>
+  (options: Options): Reporter =>
   (info: ErrorInfo) => {
-    console.log(`isUrl(url)====`, isUrl(url))
-    if (url && isUrl(url)) reportError(url, method, info)
+    let { url, method, onError, logInfo, extendsData } = Object.assign({}, defaultOptions, options)
+    let report = {
+      ...info,
+      ...(extendsData ? { extendsData } : false),
+    }
+    logInfo && console.log(report.error)
+    if (url && isUrl(url)) reportError(url, method, report)
     onError?.(info)
   }

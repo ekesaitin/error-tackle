@@ -12,17 +12,53 @@
     <button onclick="triggerRangeError()">RangeError</button>
     <button onclick="triggerResourceError()">ResourceError</button>
     <button onclick="triggerHttpError()">HttpError</button>
+    <button onclick="triggerPromiseError()">PromiseError</button>
     <br />
 
-    <script src="index.js"></script>
+    <script>
+      const triggerTypeError = () => {
+        // TypeError
+        const bb = void 0
+        bb.name
+      }
+      const triggerReferenceError = () => {
+        // ReferenceError
+        cc
+      }
+      const triggerRangeError = () => {
+        // RangeError
+        ;(function fn() {
+          fn()
+        })()
+      }
+      const triggerResourceError = () => {
+        // ResourceError
+        const img = document.createElement('img')
+        img.src = 'http://localhost:3000/aaa.png'
+        document.body.append(img)
+      }
+      const triggerHttpError = () => {
+        // HttpError
+        fetch('http://localhost:3000/notdefined', {}).then((res) => {
+          throw new Error(res.status)
+        })
+      }
+
+      const triggerPromiseError = () => {
+        new Promise(() => {
+          throw new Error('xxx')
+        })
+      }
+    </script>
 
     <script type="module">
       import { createTackle } from '../dist/index.esm.js'
 
       createTackle({
-        // url: '//localhost:3000/error',
+        // url: '//localhost:3000/error.gif',
         // method: 'POST',
-        // data: { aa: 1, bb: [1, 2, 3] },
+        // extendsData: { aa: 1, bb: [1, 2, 3] },
+        // coverError: false,
       })
     </script>
   </body>
