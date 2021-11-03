@@ -1,9 +1,8 @@
-import { ERROR_TYPE } from 'src'
+import { ERROR_TYPE, TackleOptions } from 'src'
 import { Reporter } from 'src/report'
-import { ErrorOptions } from '.'
 import { getErrorInfo } from './parseErrorInfo'
 
-export const tacklePromiseError = (options: ErrorOptions, reporter: Reporter) =>
+export const tacklePromiseError = (options: TackleOptions, reporter: Reporter) =>
   window.addEventListener('unhandledrejection', function (e) {
     const { coverError } = options
     coverError && e.preventDefault()

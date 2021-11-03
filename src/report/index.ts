@@ -1,9 +1,9 @@
-import { defaultOptions, Options } from 'src'
+import { defaultOptions, TackleOptions } from 'src'
 import { ErrorInfo } from 'src/error/parseErrorInfo'
 import { isUrl, obj2query } from 'src/utils'
 
 export type Reporter = (info: ErrorInfo) => void
-type Method = Options['method']
+type Method = TackleOptions['method']
 
 const fetchImg = (url: string, data: ErrorInfo) => {
   let query = obj2query(data)
@@ -29,9 +29,13 @@ export const reportError = (url: string, method: Method, info: ErrorInfo) => {
 }
 
 export const createReporter =
-  (options: Options): Reporter =>
+  (options: TackleOptions): Reporter =>
   (info: ErrorInfo) => {
-    let { url, method, onError, logInfo, extendsData } = Object.assign({}, defaultOptions, options)
+    let { url, method, onError, coverError, logInfo, extendsData } = Object.assign(
+      {},
+      defaultOptions,
+      options,
+    )
     let report = {
       ...info,
       ...(extendsData ? { extendsData } : false),

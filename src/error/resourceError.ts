@@ -1,9 +1,8 @@
-import { ERROR_TYPE } from 'src'
+import { ERROR_TYPE, TackleOptions } from 'src'
 import { Reporter } from 'src/report'
-import { ErrorOptions } from '.'
 import { getErrorInfo } from './parseErrorInfo'
 
-export const tackleResourceError = (options: ErrorOptions, reporter: Reporter) =>
+export const tackleResourceError = (options: TackleOptions, reporter: Reporter) =>
   window.addEventListener(
     'error',
     (e) => {
