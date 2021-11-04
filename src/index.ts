@@ -8,7 +8,6 @@ export const enum ERROR_TYPE {
   AJAX_ERROR,
   RESOURCE_ERROR,
   CONSOLE_ERROR,
-  VUE_ERROR,
 }
 
 export interface TackleOptions {
@@ -32,8 +31,6 @@ export interface TackleOptions {
   resourceError?: boolean
   /** 是否监听console.error错误 */
   consoleError?: boolean
-  /** 是否监听远端脚本错误 */
-  distanceError?: boolean
   /** 是否监听vue错误 */
   vueError?: boolean
   /** vue应用实例 */

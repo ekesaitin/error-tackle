@@ -47,12 +47,6 @@ const getResourceError = (e: ErrorEvent): ErrorInfo => {
   }
 }
 
-const getVueError = (e: VueErrorEvent): ErrorInfo => ({
-  type: e.err?.name,
-  error: e.err,
-  message: e.info,
-})
-
 export const getErrorInfo = (
   errorType: ERROR_TYPE,
   e: ErrorEvent | PromiseRejectionEvent | VueErrorEvent,
@@ -67,9 +61,6 @@ export const getErrorInfo = (
       break
     case ERROR_TYPE.RESOURCE_ERROR:
       info = getResourceError(e as ErrorEvent)
-      break
-    case ERROR_TYPE.VUE_ERROR:
-      info = getVueError(e as VueErrorEvent)
       break
   }
 
