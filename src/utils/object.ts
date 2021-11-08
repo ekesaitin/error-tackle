@@ -1,4 +1,5 @@
-import { isObject } from '.'
+import { AnyObject } from 'src/typings/types'
+import { isObject } from './is'
 
 export const obj2query = (obj: AnyObject, startQuestionMark = true) =>
   isObject(obj)

@@ -1,33 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
-    <title>Test page in http://test.com</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
   </head>
-
   <body>
-    <script>
-      const wrapListener = () => {
-        const originAddEventListener = EventTarget.prototype.addEventListener
-        EventTarget.prototype.addEventListener = function (type, listener, options) {
-          const wrappedListener = function (...args) {
-            try {
-              console.log(`fn====`, fn)
-              return listener.apply(this, args)
-            } catch (err) {
-              console.log(`err====`, err)
-              throw err
-            }
-          }
-          return originAddEventListener.call(this, type, wrappedListener, options)
-        }
-      }
-    </script>
-    <div style="height: 9999px">http://test.com</div>
-    <script src="https://yun.dui88.com/tuia/cdn/remote/error_scroll.js"></script>
-    <script>
-      window.onerror = function (message, url, line, column, error) {
-        console.log(message, url, line, column, error)
-      }
-    </script>
+    <form action="http//localhost:3000/upSource" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" id="" />
+      <button type="submit">submit</button>
+    </form>
   </body>
 </html>

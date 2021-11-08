@@ -1,34 +1,4 @@
-interface BrowserReg {
-  [Chrome: string]: RegExp
-  IE: RegExp
-  Firefox: RegExp
-  Opera: RegExp
-  Safari: RegExp
-  '360': RegExp
-  QQBrowswe: RegExp
-}
-
-interface DeviceReg {
-  [iPhone: string]: RegExp
-  Android: RegExp
-  iPad: RegExp
-  Windows: RegExp
-  Mac: RegExp
-}
-
-/** 用户设备信息 */
-export interface UserAgentObj {
-  /** 浏览器名称 */
-  browserName: string
-  /** 浏览器版本 */
-  browserVersion: string
-  /** 操作系统名称 */
-  osName: string
-  /** 操作系统版本 */
-  osVersion: string
-  /** 设备名称 */
-  deviceName: string
-}
+import { BrowserReg, DeviceReg, UserAgentObj } from 'src/typings/types'
 
 let browserReg: BrowserReg = {
   Chrome: /Chrome/,

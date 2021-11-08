@@ -1,4 +1,4 @@
-import { VueApp } from 'src/error'
+import { AnyObject, VueApp } from 'src/typings/types'
 
 export const isObject = (val: unknown): val is AnyObject => val !== null && typeof val === 'object'
 

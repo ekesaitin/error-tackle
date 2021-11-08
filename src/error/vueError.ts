@@ -1,5 +1,4 @@
-import { TackleOptions } from 'src'
-import { Reporter } from 'src/report'
+import { Reporter, TackleOptions } from 'src/typings/types'
 
 export const tackleVueError = (options: TackleOptions, reporter: Reporter) => {
   const { vueApp } = options

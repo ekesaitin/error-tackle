@@ -1,21 +1,7 @@
-import { ERROR_TYPE } from 'src'
+import { ErrorInfo, VueErrorEvent } from 'src/typings/types'
 import { getDateTime } from 'src/utils'
-import { getUserAgent, UserAgentObj } from 'src/utils/client'
-
-interface VueErrorEvent {
-  err: any
-  vm: AnyObject
-  info: string
-}
-
-export interface ErrorInfo {
-  type: string
-  error: any
-  message: string
-  datatime?: string
-  extendsData?: any
-  userAgent?: UserAgentObj
-}
+import { getUserAgent } from 'src/utils/client'
+import { ERROR_TYPE } from '..'
 
 const getErrorType = (e: ErrorEvent | PromiseRejectionEvent) => {
   if (e instanceof ErrorEvent) return e.error?.name
@@ -36,9 +22,9 @@ const getPromiseError = (e: PromiseRejectionEvent): ErrorInfo => ({
 
 const getResourceError = (e: ErrorEvent): ErrorInfo => {
   const target = e.target as any
-  let error = `${target.tagName.toLowerCase()}: ${target?.src ?? target?.href} 加载错误，页面URL: ${
-    target.baseURI
-  }`
+  let error = ` ${target.baseURI}页面 加载${target.tagName.toLowerCase()}: ${
+    target?.src ?? target?.href
+  } 错误`
 
   return {
     type: 'ResourceError',
@@ -46,6 +32,12 @@ const getResourceError = (e: ErrorEvent): ErrorInfo => {
     message: '资源加载错误',
   }
 }
+
+const getConsoleError = (e: any): ErrorInfo => ({
+  type: 'ConsoleError',
+  error: e,
+  message: `${window.location.href}，页面通过 console.error 抛出的错误，`,
+})
 
 export const getErrorInfo = (
   errorType: ERROR_TYPE,
@@ -61,6 +53,9 @@ export const getErrorInfo = (
       break
     case ERROR_TYPE.RESOURCE_ERROR:
       info = getResourceError(e as ErrorEvent)
+      break
+    case ERROR_TYPE.CONSOLE_ERROR:
+      info = getConsoleError(e)
       break
   }
 
