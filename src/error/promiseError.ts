@@ -1,4 +1,4 @@
-import { ERROR_TYPE } from '..'
+import { ERROR_TYPE } from 'src'
 import { Reporter, TackleOptions } from 'src/typings/types'
 import { getErrorInfo } from './parseErrorInfo'
 

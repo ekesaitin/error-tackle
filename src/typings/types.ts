@@ -19,6 +19,8 @@ export interface TackleOptions {
   resourceError?: boolean
   /** 是否监听console.error错误 */
   consoleError?: boolean
+  /** 是否监听ajax错误 （xmlHttpRequest、fetch） */
+  ajaxError?: boolean
   /** 是否监听vue错误 */
   vueError?: boolean
   /** vue应用实例 */

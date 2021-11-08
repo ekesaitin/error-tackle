@@ -1,8 +1,8 @@
 import { ERROR_TYPE } from 'src'
 import { getErrorInfo } from 'src/error/parseErrorInfo'
 import { TackleOptions, Reporter } from 'src/typings/types'
+import { noop } from 'src/utils'
 
-const noop = () => {}
 export const tackleConsoleError = (options: TackleOptions, reporter: Reporter) => {
   const consoleError = window.console?.error || noop
   const { coverError } = options

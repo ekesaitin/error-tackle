@@ -11,3 +11,5 @@ export const obj2query = (obj: AnyObject, startQuestionMark = true) =>
         '',
       )
     : obj
+
+export const noop = () => {}

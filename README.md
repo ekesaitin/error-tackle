@@ -27,9 +27,10 @@ error-tackle
  ├── src                # 开发源码
  │   ├── action         # 记录用户操作
  │   ├── error          # 错误捕获相关
- │   ├── index.ts       # 入口文件
  │   ├── report         # 将错误信息上报
+ │   ├── typings        # 类型定义
  │   └── utils          # 工具库
+ │   ├── index.ts       # 主入口
  ├── package.json
  ├── pnpm-lock.yaml
  ├── README.md

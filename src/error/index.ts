@@ -1,3 +1,4 @@
+import { tackleAjaxError } from 'src/error/ajaxError'
 import { tackleConsoleError } from 'src/error/consoleError'
 import { AnyObject, Reporter, TackleOptions } from 'src/typings/types'
 import { isVueApp } from 'src/utils'
@@ -30,11 +31,13 @@ const rewriteEventListener = () => {
 export const createErrorTackle = (options: TackleOptions, reporter: Reporter) => {
   rewriteEventListener()
 
-  const { jsError, promiseError, resourceError, vueApp, vueError, consoleError } = options
+  const { jsError, promiseError, resourceError, consoleError, ajaxError, vueApp, vueError } =
+    options
 
   if (jsError) tackleJsError(options, reporter)
   if (promiseError) tacklePromiseError(options, reporter)
   if (resourceError) tackleResourceError(options, reporter)
-  if (vueError && isVueApp(vueApp)) tackleVueError(options, reporter)
   if (consoleError) tackleConsoleError(options, reporter)
+  if (vueError && isVueApp(vueApp)) tackleVueError(options, reporter)
+  if (ajaxError) tackleAjaxError(options, reporter)
 }

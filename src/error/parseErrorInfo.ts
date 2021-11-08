@@ -1,7 +1,7 @@
 import { ErrorInfo, VueErrorEvent } from 'src/typings/types'
 import { getDateTime } from 'src/utils'
 import { getUserAgent } from 'src/utils/client'
-import { ERROR_TYPE } from '..'
+import { ERROR_TYPE } from 'src'
 
 const getErrorType = (e: ErrorEvent | PromiseRejectionEvent) => {
   if (e instanceof ErrorEvent) return e.error?.name
@@ -39,9 +39,21 @@ const getConsoleError = (e: any): ErrorInfo => ({
   message: `${window.location.href}，页面通过 console.error 抛出的错误，`,
 })
 
+export const enum AJAX_ERROR_TYPE {
+  FETCH_ERROR = 'FetchError',
+  XHR_ERROR = 'XHRError',
+}
+
+const getAjaxError = (e: any, type: AJAX_ERROR_TYPE): ErrorInfo => ({
+  type,
+  error: e,
+  message: 'ajax error',
+})
+
 export const getErrorInfo = (
-  errorType: ERROR_TYPE,
+  errorType: ERROR_TYPE | never,
   e: ErrorEvent | PromiseRejectionEvent | VueErrorEvent,
+  ...args: any[]
 ): ErrorInfo => {
   let info = {} as ErrorInfo
   switch (errorType) {
@@ -56,6 +68,9 @@ export const getErrorInfo = (
       break
     case ERROR_TYPE.CONSOLE_ERROR:
       info = getConsoleError(e)
+      break
+    case ERROR_TYPE.AJAX_ERROR:
+      info = getAjaxError(e, args[0])
       break
   }
 

@@ -7,6 +7,7 @@ export const enum ERROR_TYPE {
   PROMISE_ERROR = 'promiseError',
   RESOURCE_ERROR = 'resourceError',
   CONSOLE_ERROR = 'consoleError',
+  AJAX_ERROR = 'ajaxError',
 }
 
 export const defaultOptions: TackleOptions = {
@@ -16,6 +17,7 @@ export const defaultOptions: TackleOptions = {
   promiseError: true,
   resourceError: true,
   consoleError: true,
+  ajaxError: true,
   vueError: false,
   vueApp: null,
   coverError: true,
