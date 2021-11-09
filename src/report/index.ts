@@ -28,11 +28,12 @@ export const createReporter =
   (options: TackleOptions): Reporter =>
   (info: ErrorInfo) => {
     let { url, method, onError, logError, coverError, extendsData } = options
+
     let report = {
       ...info,
       ...(extendsData ? { extendsData } : false),
     }
-    console.log(`report====`, report)
+
     logError && coverError && console.log(report.error)
     if (url && isUrl(url)) reportError(url, method, report)
     onError?.(info)

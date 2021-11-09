@@ -7,9 +7,24 @@
     <title>Document</title>
   </head>
   <body>
-    <form action="http//localhost:3000/upSource" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" id="" />
-      <button type="submit">submit</button>
-    </form>
+    <script>
+      const obj = {}
+      function aa() {
+        bb()
+      }
+      function bb() {
+        cc()
+      }
+      function cc() {
+        Error.captureStackTrace(obj, cc)
+        dd()
+      }
+      function dd() {
+        // throw Error('xxx')
+      }
+
+      aa()
+      console.log(obj.stack)
+    </script>
   </body>
 </html>

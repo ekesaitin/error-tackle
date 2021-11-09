@@ -12,6 +12,7 @@
     <button onclick="triggerRangeError()">RangeError</button>
     <button onclick="triggerResourceError()">ResourceError</button>
     <button onclick="triggerHttpError()">HttpError</button>
+    <button onclick="triggerFetchError()">FetchError</button>
     <button onclick="triggerPromiseError()">PromiseError</button>
     <br />
 
@@ -37,17 +38,26 @@
         img.src = 'http://localhost:3000/aaa.png'
         document.body.append(img)
       }
-      const triggerHttpError = () => {
-        // HttpError
-        fetch('http://localhost:3000/notdefined', {}).then((res) => {
-          throw new Error(res.status)
-        })
-      }
 
       const triggerPromiseError = () => {
         new Promise(() => {
           throw new Error('xxx')
         })
+      }
+
+      const triggerFetchError = () => {
+        // HttpError
+        fetch('http://localhost:3000/remote/notdefined', {})
+      }
+
+      const triggerHttpError = () => {
+        let xhr = new XMLHttpRequest()
+        xhr.open('GET', 'http://localhost:30000/notdefined', true)
+        xhr.send()
+      }
+
+      const triggerConsoleError = () => {
+        console.error(Error('xxx'), 'yyy')
       }
     </script>
 
