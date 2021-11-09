@@ -1,12 +1,6 @@
-import { AnyObject } from 'src/typings/types'
-import { ERROR_TYPE } from 'src'
-import { AJAX_ERROR_TYPE, getErrorInfo } from 'src/error/parseErrorInfo'
-import { TackleOptions, Reporter } from 'src/typings/types'
+import { getErrorInfo } from 'src/error/parseErrorInfo'
+import { AJAX_ERROR_TYPE, ERROR_TYPE, Reporter, StackMap, TackleOptions } from 'src/typings/types'
 import { isObject, noop } from 'src/utils'
-
-interface StackMap {
-  stack: object
-}
 
 const shallowCloneError = <T extends object>(err: T): T => {
   if (!isObject(err)) {
@@ -84,13 +78,11 @@ const rewriteFetch = (reporter: Reporter) => {
         .call(this, input, init)
         .then((res) => {
           if (!res.ok) {
-            // setStack(res, interceptiveStack)
             handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, res, interceptiveStack)
           }
           return res
         })
         .catch(function fn(err) {
-          // setStack(err, interceptiveStack)
           handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, err, interceptiveStack)
         })
     )

@@ -1,5 +1,4 @@
-import { ERROR_TYPE } from 'src'
-import { Reporter, TackleOptions } from 'src/typings/types'
+import { ERROR_TYPE, Reporter, TackleOptions } from 'src/typings/types'
 import { getErrorInfo } from './parseErrorInfo'
 
 export const tackleJsError = (options: TackleOptions, reporter: Reporter) =>

@@ -44,14 +44,25 @@ export interface VueErrorEvent {
 }
 
 export interface ErrorInfo {
+  /** 错误类型 */
   type: string
+  /** 捕获的error本体 */
   error: any
+  /** 报错信息 */
   message: string
+  /** 错误源文件 */
   source?: string
+  /** 报错误所在的方法名 */
+  name?: string
+  /** 错误所在行 */
   lineno?: number
+  /** 错误所在列 */
   colno?: number
+  /** 出现错误的时间 */
   datatime?: string
+  /** 自定义上报时额外携带的参数 */
   extendsData?: any
+  /** 用户设备信息 */
   userAgent?: UserAgentObj
 }
 
@@ -89,4 +100,21 @@ export interface UserAgentObj {
   osVersion: string
   /** 设备名称 */
   deviceName: string
+}
+
+export interface StackMap {
+  stack: string
+}
+
+export const enum ERROR_TYPE {
+  JS_ERROR = 'jsError',
+  PROMISE_ERROR = 'promiseError',
+  RESOURCE_ERROR = 'resourceError',
+  CONSOLE_ERROR = 'consoleError',
+  AJAX_ERROR = 'ajaxError',
+}
+
+export const enum AJAX_ERROR_TYPE {
+  FETCH_ERROR = 'FetchError',
+  XHR_ERROR = 'XHRError',
 }

@@ -1,6 +1,5 @@
-import { ERROR_TYPE } from 'src'
 import { getErrorInfo } from 'src/error/parseErrorInfo'
-import { TackleOptions, Reporter } from 'src/typings/types'
+import { TackleOptions, Reporter, ERROR_TYPE } from 'src/typings/types'
 import { noop } from 'src/utils'
 
 export const tackleConsoleError = (options: TackleOptions, reporter: Reporter) => {

@@ -2,14 +2,6 @@ import { createErrorTackle } from './error'
 import { createReporter } from './report'
 import { TackleOptions } from './typings/types'
 
-export const enum ERROR_TYPE {
-  JS_ERROR = 'jsError',
-  PROMISE_ERROR = 'promiseError',
-  RESOURCE_ERROR = 'resourceError',
-  CONSOLE_ERROR = 'consoleError',
-  AJAX_ERROR = 'ajaxError',
-}
-
 export const defaultOptions: TackleOptions = {
   method: 'IMG',
   logError: true,
