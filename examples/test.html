@@ -8,23 +8,9 @@
   </head>
   <body>
     <script>
-      const obj = {}
-      function aa() {
-        bb()
-      }
-      function bb() {
-        cc()
-      }
-      function cc() {
-        Error.captureStackTrace(obj, cc)
-        dd()
-      }
-      function dd() {
-        // throw Error('xxx')
-      }
-
-      aa()
-      console.log(obj.stack)
+      const urlSearchParams = new URLSearchParams(window.location.search)
+      const params = Object.fromEntries(urlSearchParams.entries())
+      console.log(params)
     </script>
   </body>
 </html>

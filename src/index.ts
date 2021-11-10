@@ -8,7 +8,7 @@ export const defaultOptions: TackleOptions = {
   jsError: true,
   promiseError: true,
   resourceError: true,
-  consoleError: true,
+  consoleError: false,
   ajaxError: true,
   vueError: false,
   vueApp: null,

@@ -8,17 +8,20 @@ import pkg from './package.json'
 
 const resolve = (...args) => path.resolve(__dirname, ...args)
 
+const sourcemap = false
+
 export default defineConfig({
   input: 'src/index.ts',
   output: [
     {
       file: pkg.main,
       format: 'cjs',
+      sourcemap,
     },
     {
       file: pkg.module,
       format: 'es',
-      sourcemap: true,
+      sourcemap,
     },
   ],
   plugins: [
