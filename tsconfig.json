@@ -9,7 +9,7 @@
     "strict": true /* Enable all strict type-checking options. */,
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
-    "types": ["node"] /* Type declaration files to be included in compilation. */,
+    "types": ["node", "jest"] /* Type declaration files to be included in compilation. */,
     "paths": {
       "src": ["./src"]
     },
@@ -20,5 +20,5 @@
     "sourceMap": true
   },
   "include": ["src"],
-  "exclude": ["dist"]
+  "exclude": ["dist", "**/**/*.test.ts"]
 }

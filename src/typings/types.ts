@@ -5,12 +5,6 @@ export interface TackleOptions {
   url?: string
   /** 上报信息的请求方式 */
   method?: 'GET' | 'POST' | 'IMG'
-  /** 是否在控制台打印错误 */
-  logError?: boolean
-  /** 上报信息需要额外携带的数据 */
-  extendsData?: any
-  /** 捕获到错误时会执行的方法 */
-  onError?: (info: ErrorInfo) => void
   /** 是否监听js错误（TypeError、ReferenceError等） */
   jsError?: boolean
   /** 是否监听promise错误 */
@@ -25,15 +19,21 @@ export interface TackleOptions {
   vueError?: boolean
   /** vue应用实例 */
   vueApp?: VueApp | null
+  /** 是否在控制台打印错误 */
+  logError?: boolean
   /** 是否阻止错误继续向上传播 */
   coverError?: boolean
+  /** 上报信息需要额外携带的数据 */
+  extendsData?: any
+  /** 捕获到错误时会执行的方法 */
+  onError?: (info: ErrorInfo) => void
 }
 
 export type VueErrorHandler = (err: any, vm: AnyObject, info: string) => void
 
 export interface VueApp {
   config: {
-    errorHandler: VueErrorHandler
+    errorHandler?: VueErrorHandler
   }
 }
 
