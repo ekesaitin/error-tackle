@@ -1,3 +1,4 @@
+import { TackleOptions } from 'src/typings/types'
 import { createTackle, defaultOptions, getOptions } from './index'
 
 describe('index', () => {
@@ -9,7 +10,7 @@ describe('index', () => {
 
   test('getOptions', () => {
     const options = {
-      url: '//localhost:3000/error',
+      url: 'xxxxx.com/xxx',
       method: 'POST',
       logError: false,
       jsError: false,
@@ -30,8 +31,29 @@ describe('index', () => {
       onError: () => {},
     }
 
+    const someOptions: TackleOptions = {
+      url: 'xxxxx.com/xxx',
+      method: 'POST',
+      extendsData: 1010101010,
+    }
+
     expect(getOptions()).toEqual(defaultOptions)
     expect(getOptions({})).toEqual(defaultOptions)
     expect(getOptions(options)).toEqual(options)
+    expect(getOptions(someOptions)).toEqual({
+      url: 'xxxxx.com/xxx',
+      method: 'POST',
+      extendsData: 1010101010,
+      logError: true,
+      jsError: true,
+      promiseError: true,
+      resourceError: true,
+      consoleError: false,
+      ajaxError: true,
+      vueError: false,
+      vueApp: null,
+      coverError: true,
+      onError: null,
+    })
   })
 })

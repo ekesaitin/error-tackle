@@ -26,7 +26,7 @@ export interface TackleOptions {
   /** 上报信息需要额外携带的数据 */
   extendsData?: any
   /** 捕获到错误时会执行的方法 */
-  onError?: (info: ErrorInfo) => void
+  onError?: null | ((info: ErrorInfo) => void)
 }
 
 export type VueErrorHandler = (err: any, vm: AnyObject, info: string) => void

@@ -1,4 +1,3 @@
-import { noop } from 'src/utils'
 import { createErrorTackle } from './error'
 import { createReporter } from './report'
 import { TackleOptions } from './typings/types'
@@ -16,7 +15,7 @@ export const defaultOptions: TackleOptions = {
   vueApp: null,
   coverError: true,
   extendsData: null,
-  onError: noop,
+  onError: null,
 }
 
 export const getOptions = <T extends Object>(options?: T): TackleOptions => {

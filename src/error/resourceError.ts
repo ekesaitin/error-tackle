@@ -1,5 +1,5 @@
-import { ERROR_TYPE, Reporter, TackleOptions } from 'src/typings/types'
 import { getErrorInfo } from 'src/error/parseErrorInfo'
+import { ERROR_TYPE, Reporter, TackleOptions } from 'src/typings/types'
 
 export const tackleResourceError = (options: TackleOptions, reporter: Reporter) =>
   window.addEventListener(
