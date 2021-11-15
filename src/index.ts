@@ -1,3 +1,4 @@
+import { isArray, isObject } from 'src/utils'
 import { createErrorTackle } from './error'
 import { createReporter } from './report'
 import { TackleOptions } from './typings/types'
@@ -18,8 +19,8 @@ export const defaultOptions: TackleOptions = {
   onError: null,
 }
 
-export const getOptions = <T extends Object>(options?: T): TackleOptions => {
-  if (!options) return { ...defaultOptions }
+const getOptions = <T extends Object>(options?: T): TackleOptions => {
+  if (!options || !isObject(options) || isArray(options)) return { ...defaultOptions }
   const opts = {} as TackleOptions
   const keys = Object.keys(defaultOptions) as (keyof TackleOptions)[]
   keys.forEach((key) => {

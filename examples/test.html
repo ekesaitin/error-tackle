@@ -101,21 +101,14 @@
         {},
       )
       splitedOrders = splitedOrders.map((orders, idx) => {
-        const idMap = {}
-        const missingMap = JSON.parse(JSON.stringify(itemsMap)) // 深拷贝一下，表示缺失的，最后应该补上的对象
+        const idMap = JSON.parse(JSON.stringify(itemsMap))
         orders.forEach((order) => {
           let { orderItemId } = order
           let existingOrder = idMap[orderItemId]
-          if (existingOrder) {
-            existingOrder.quantity++
-          } else {
-            idMap[orderItemId] = order
-            delete missingMap[orderItemId] // 现在结果（idMap）中已经有属于当前orderItemId的项了，说明最后不需要再补上了，在missingMap中删掉即可
-          }
+          idMap[orderItemId].quantity++
         })
         let arr = Object.values(idMap)
-        let missingArr = Object.values(missingMap)
-        return { items: arr.concat(missingArr) }
+        return { items: arr }
       })
 
       console.log(`splitedOrders====`, splitedOrders)
