@@ -39,7 +39,6 @@ const getConsoleError = (e: any): ErrorInfo => ({
 })
 
 const getAjaxError = (e: any, type: AJAX_ERROR_TYPE): ErrorInfo => {
-  console.log(`e.stack====`, e.stack)
   const source = getSourceFromStack(e.stack)
   return {
     type,
