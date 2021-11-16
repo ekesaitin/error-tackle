@@ -5,11 +5,10 @@ import * as report from '../report'
 
 jest.mock('../error')
 jest.mock('../report')
+const createErrorTackle: any = error.createErrorTackle
+const createReporter: any = report.createReporter
 
 describe('createTackle', () => {
-  const createErrorTackle: any = error.createErrorTackle
-  const createReporter: any = report.createReporter
-
   test('没有options传入时', () => {
     createTackle()
     expect(createErrorTackle).toHaveBeenCalledTimes(1)

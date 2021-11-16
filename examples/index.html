@@ -72,6 +72,9 @@
         // method: 'POST',
         // extendsData: { aa: 1, bb: [1, 2, 3] },
         // coverError: false,
+        onError(info) {
+          console.log(info)
+        },
       })
     </script>
   </body>
