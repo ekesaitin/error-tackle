@@ -34,8 +34,4 @@ export const createTackle = (options?: TackleOptions) => {
   const _options = getOptions(options)
   const reporter = createReporter(_options)
   createErrorTackle(_options, reporter)
-
-  return {
-    reporter,
-  }
 }

@@ -1,10 +1,8 @@
 import { AnyObject } from 'src/typings/types'
-import { isString } from 'src/utils'
-import { isObject } from './is'
+import { isPlainObject, isString } from 'src/utils'
 
-/** 字符串转url参数 */
 export const obj2query = (obj: AnyObject, startQuestionMark = true) =>
-  isObject(obj)
+  isPlainObject(obj)
     ? Object.entries(obj).reduce(
         (q, [key, val], index) =>
           `${q}${index === 0 ? (startQuestionMark ? '?' : '') : '&'}${encodeURIComponent(
@@ -14,7 +12,6 @@ export const obj2query = (obj: AnyObject, startQuestionMark = true) =>
       )
     : obj
 
-/** 这是一个空函数 */
 export const noop = () => {}
 
 const stackRE = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i
