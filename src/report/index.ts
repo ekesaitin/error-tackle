@@ -1,13 +1,13 @@
 import { ErrorInfo, Method, Reporter, TackleOptions } from 'src/typings/types'
 import { isUrl, obj2query } from 'src/utils'
 
-const fetchImg = (url: string, data: ErrorInfo) => {
+export const fetchImg = (url: string, data: ErrorInfo) => {
   let query = obj2query(data)
   const gif = document.createElement('img')
   gif.src = url + query
 }
 
-const fetchData = (url: string, method: Method, info: ErrorInfo) => {
+export const fetchData = (url: string, method: Method, info: ErrorInfo) => {
   let query = obj2query(info)
   url = method === 'GET' ? url + query : url
   fetch(url, {
