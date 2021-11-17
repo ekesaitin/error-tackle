@@ -1,13 +1,13 @@
 import { AnyObject } from 'src/typings/types'
-import { isPlainObject, isString } from 'src/utils'
+import { isArray, isObject, isPlainObject, isString } from 'src/utils'
 
-export const obj2query = (obj: AnyObject, startQuestionMark = true) =>
+export const obj2query = (obj: AnyObject, startQuestionMark = true): any =>
   isPlainObject(obj)
     ? Object.entries(obj).reduce(
         (q, [key, val], index) =>
           `${q}${index === 0 ? (startQuestionMark ? '?' : '') : '&'}${encodeURIComponent(
             key,
-          )}=${encodeURIComponent(val)}`,
+          )}=${encodeURIComponent(isObject(val) ? JSON.stringify(val) : val)}`,
         '',
       )
     : obj

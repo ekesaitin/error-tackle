@@ -50,7 +50,7 @@
 
       const triggerFetchError = () => {
         // HttpError
-        fetch('http://localhost:3000/remote/notdefined', {})
+        fetch('http://localhost:3000/notdefined', {})
       }
 
       const triggerHttpError = () => {
@@ -68,12 +68,13 @@
       import { createTackle } from '../dist/index.esm.js'
 
       createTackle({
-        // url: '//localhost:3000/error.gif',
+        url: '//localhost:3000/error.gif',
         // method: 'POST',
         // extendsData: { aa: 1, bb: [1, 2, 3] },
         // coverError: false,
+        logError: false,
         onError(info) {
-          console.log(info)
+          // console.log(`info====`, info)
         },
       })
     </script>

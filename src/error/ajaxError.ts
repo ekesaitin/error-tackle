@@ -34,13 +34,22 @@ const rewriteXmlHttpRequest = (reporter: Reporter) => {
   const interceptiveStack = {} as StackMap
 
   let xhrSend = XMLHttpRequest.prototype.send
+  let fetched = false
   let _handleEvent = (e: any) => {
     try {
       if (e && e.currentTarget && e.currentTarget.status !== 200) {
-        handleReportError(reporter, AJAX_ERROR_TYPE.XHR_ERROR, e, interceptiveStack)
+        if (!fetched) {
+          fetched = true
+          handleReportError(reporter, AJAX_ERROR_TYPE.XHR_ERROR, e, interceptiveStack)
+        }
       }
     } catch (err) {
-      handleReportError(reporter, AJAX_ERROR_TYPE.XHR_ERROR, err, interceptiveStack)
+      if (!fetched) {
+        fetched = true
+        handleReportError(reporter, AJAX_ERROR_TYPE.XHR_ERROR, err, interceptiveStack)
+      }
+    } finally {
+      fetched = false
     }
   }
   XMLHttpRequest.prototype.send = function newSend() {
@@ -71,6 +80,7 @@ const rewriteFetch = (reporter: Reporter) => {
   function newFetch(input: RequestInfo, init?: RequestInit | undefined) {
     const interceptiveStack = {} as StackMap
     Error.captureStackTrace(interceptiveStack, newFetch)
+    let fetched = false
 
     return (
       _oldFetch
@@ -78,12 +88,18 @@ const rewriteFetch = (reporter: Reporter) => {
         .call(this, input, init)
         .then((res) => {
           if (!res.ok) {
-            handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, res, interceptiveStack)
+            if (!fetched) {
+              fetched = true
+              handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, res, interceptiveStack)
+            }
           }
           return res
         })
         .catch(function fn(err) {
-          handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, err, interceptiveStack)
+          if (!fetched) {
+            fetched = true
+            handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, err, interceptiveStack)
+          }
         })
     )
   }
