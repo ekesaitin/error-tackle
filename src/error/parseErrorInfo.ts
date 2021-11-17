@@ -2,16 +2,33 @@ import { AJAX_ERROR_TYPE, ErrorInfo, ERROR_TYPE, VueErrorEvent } from 'src/typin
 import { getDateTime, getSourceFromStack } from 'src/utils'
 import { getUserAgent } from 'src/utils/client'
 
+const getErrInfoWithSource = (target: ErrorInfo, stack: string): ErrorInfo => {
+  const source = getSourceFromStack(stack)
+  if (source) {
+    return {
+      ...target,
+      ...source,
+    }
+  } else {
+    return target
+  }
+}
+
 const getErrorType = (e: ErrorEvent | PromiseRejectionEvent) => {
   if (e instanceof ErrorEvent) return e.error?.name
   else if (e instanceof PromiseRejectionEvent) return e.type
 }
 
-const getJsError = (e: ErrorEvent): ErrorInfo => ({
-  type: getErrorType(e),
-  error: e.error,
-  message: e.error?.message,
-})
+const getJsError = (e: ErrorEvent): ErrorInfo => {
+  return getErrInfoWithSource(
+    {
+      type: getErrorType(e),
+      error: e.error,
+      message: e.error?.message,
+    },
+    e.error.stack,
+  )
+}
 
 const getPromiseError = (e: PromiseRejectionEvent): ErrorInfo => ({
   type: getErrorType(e),
@@ -32,20 +49,29 @@ const getResourceError = (e: ErrorEvent): ErrorInfo => {
   }
 }
 
-const getConsoleError = (e: any): ErrorInfo => ({
-  type: 'ConsoleError',
-  error: e,
-  message: `${window.location.href}，页面通过 console.error 抛出的错误，`,
-})
+const getConsoleError = (e: any): ErrorInfo => {
+  const info = {
+    type: 'ConsoleError',
+    error: e,
+    message: `${window.location.href}，页面通过 console.error 抛出的错误，`,
+  }
+
+  if (e instanceof Error) {
+    return getErrInfoWithSource(info, e.stack ?? '')
+  } else {
+    return info
+  }
+}
 
 const getAjaxError = (e: any, type: AJAX_ERROR_TYPE): ErrorInfo => {
-  const source = getSourceFromStack(e.stack)
-  return {
-    type,
-    error: e,
-    message: 'ajax error',
-    ...(source ? source : null),
-  }
+  return getErrInfoWithSource(
+    {
+      type,
+      error: e,
+      message: 'ajax error',
+    },
+    e.stack,
+  )
 }
 
 export const getErrorInfo = (

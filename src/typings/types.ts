@@ -55,9 +55,9 @@ export interface ErrorInfo {
   /** 报错误所在的方法名 */
   name?: string
   /** 错误所在行 */
-  lineno?: number
+  lineno?: number | string
   /** 错误所在列 */
-  colno?: number
+  colno?: number | string
   /** 出现错误的时间 */
   datatime?: string
   /** 自定义上报时额外携带的参数 */
