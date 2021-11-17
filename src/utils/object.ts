@@ -12,6 +12,7 @@ export const obj2query = (obj: AnyObject, startQuestionMark = true): any =>
       )
     : obj
 
+console.log(obj2query({ a: 11, b: { c: 22 }, d: [33, 44] }))
 export const noop = () => {}
 
 const stackRE = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i

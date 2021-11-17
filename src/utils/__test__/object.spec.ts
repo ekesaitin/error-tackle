@@ -4,6 +4,9 @@ describe('utils-object', () => {
   test('obj2query', () => {
     expect(obj2query({ name: 'xxx', age: 111 })).toBe('?name=xxx&age=111')
     expect(obj2query({ name: 'xxx', age: 111 }, false)).toBe('name=xxx&age=111')
+    expect(obj2query({ a: 11, b: { c: 22 }, d: [33, 44] })).toBe(
+      `?a=11&b=${encodeURIComponent('{"c":22}')}&d=${encodeURIComponent('[33,44]')}`,
+    )
     expect(obj2query({})).toBe('')
     expect(obj2query([])).toEqual([])
     expect(obj2query(123 as any)).toEqual(123)
