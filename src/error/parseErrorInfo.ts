@@ -68,7 +68,7 @@ const getAjaxError = (e: any, type: AJAX_ERROR_TYPE): ErrorInfo => {
     {
       type,
       error: e,
-      message: 'ajax error',
+      message: e?.message ?? e?.statusText ?? 'ajax error',
     },
     e.stack,
   )

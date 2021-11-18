@@ -1,16 +1,23 @@
 import { getErrorInfo } from 'src/error/parseErrorInfo'
-import { AJAX_ERROR_TYPE, ERROR_TYPE, Reporter, StackMap, TackleOptions } from 'src/typings/types'
-import { isObject, noop } from 'src/utils'
+import {
+  AJAX_ERROR_TYPE,
+  ERROR_TYPE,
+  FETCH_URL_END,
+  Reporter,
+  StackMap,
+  TackleOptions,
+} from 'src/typings/types'
+import { isObject, isString, noop } from 'src/utils'
 
-const shallowCloneError = <T extends object>(err: T): T => {
-  if (!isObject(err)) {
-    return err
+const getCloneError = <T extends Error>(error: T): T => {
+  if (error instanceof Error) {
+    const { name } = error
+    const newError = new (window as any)[name](error.message, { cause: true })
+    Error.captureStackTrace(newError, getCloneError)
+    return newError
+  } else {
+    return error
   }
-  const res = Object.create(null)
-  for (let key in err) {
-    res[key] = err[key]
-  }
-  return res
 }
 
 const handleReportError = (
@@ -19,7 +26,8 @@ const handleReportError = (
   error: any,
   stackMap?: StackMap,
 ) => {
-  const err = shallowCloneError(error)
+  const err = getCloneError(error)
+
   if (stackMap) {
     err.stack = stackMap.stack
   }
@@ -82,11 +90,22 @@ const rewriteFetch = (reporter: Reporter) => {
     Error.captureStackTrace(interceptiveStack, newFetch)
     let fetched = false
 
+    let isReportFetch = false
+    if (isString(input)) {
+      if (input.endsWith(FETCH_URL_END)) {
+        isReportFetch = true
+        input.replace(FETCH_URL_END, '')
+      }
+    }
+
     return (
       _oldFetch
         // @ts-ignore
         .call(this, input, init)
         .then((res) => {
+          if (isReportFetch) {
+            return res
+          }
           if (!res.ok) {
             if (!fetched) {
               fetched = true
@@ -96,10 +115,14 @@ const rewriteFetch = (reporter: Reporter) => {
           return res
         })
         .catch(function fn(err) {
+          if (isReportFetch) return
           if (!fetched) {
             fetched = true
             handleReportError(reporter, AJAX_ERROR_TYPE.FETCH_ERROR, err, interceptiveStack)
           }
+          const error = getCloneError(err)
+          error.stack = interceptiveStack.stack
+          return Promise.reject(error)
         })
     )
   }

@@ -8,110 +8,21 @@
   </head>
   <body>
     <script>
-      const items = [
-        {
-          asin: '4asintestAmazon',
-          sellerSku: 'testAmazon4',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '99085262989373',
-          quantity: '',
-          quantityOrdered: 7,
-        },
-        {
-          asin: '3asintestAmazon',
-          sellerSku: 'testAmazon3',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '11996624347456',
-          quantity: '',
-          quantityOrdered: 2,
-        },
-        {
-          asin: '2asintestAmazon',
-          sellerSku: 'testAmazon2',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '74533383592596',
-          quantity: '',
-          quantityOrdered: 1,
-        },
-        {
-          asin: '1asintestAmazon',
-          sellerSku: 'testAmazon1',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '67552245400296',
-          quantity: '',
-          quantityOrdered: 5,
-        },
-        {
-          asin: '5asintestAmazon',
-          sellerSku: 'testAmazon1',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '92589614341622',
-          quantity: '',
-          quantityOrdered: 10,
-        },
-        {
-          asin: '3asintestAmazon',
-          sellerSku: 'testAmazon3',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '74523359488658',
-          quantity: '',
-          quantityOrdered: 3,
-        },
-        {
-          asin: '5asintestAmazon',
-          sellerSku: 'testAmazon1',
-          title: 'Amazon_Product_Name_禾友7625',
-          orderItemId: '92778921605973',
-          quantity: '',
-          quantityOrdered: 1,
-        },
-      ]
-
-      let splitNum = 5
-
-      // 获取 基本的订单，数量为1
-      let baseSplitOrders = []
-      for (let i = 0; i < items.length; i++) {
-        let item = items[i]
-        for (let j = 0; j < item.quantityOrdered; j++) {
-          baseSplitOrders.push({
-            ...item,
-            quantity: 1,
-          })
+      const getCloneError = (error) => {
+        if (error instanceof Error) {
+          const Constructor = error.constructor
+          const newError = new Constructor(error)
+          Error.captureStackTrace(newError, getCloneError)
+          return newError
+        } else {
+          return error
         }
       }
-      // console.log('baseSplitOrders====', baseSplitOrders);
-      // 把订单拆分为 长度为splitNum的 二维数据
-      let splitedOrders = []
-      for (let i = 0; i < baseSplitOrders.length; i++) {
-        let subOrderIndex = i % splitNum
-        let orders = splitedOrders[subOrderIndex]
-        if (!orders) splitedOrders[subOrderIndex] = orders = []
-        orders.push(baseSplitOrders[i])
-      }
-      // 把展示的 splitOrders 拆成期望数目的长度的订单
-      // for (let i = 0; i < splitNum - 2; i++) {
-      //   splitOrders.push(splitOrders[0])
-      // }
-      // console.log('splitOrders====', splitOrders);
-      // 根据 orderItemId 把 每个数组里面的数据整理，合并 相同的 orderItemId 的数量。
-      const itemsMap = items.reduce(
-        // items中的所有项组成的集合，key是orderItemId，值是{ ...item, quantity: 0 }
-        (map, item) => ((map[item.orderItemId] = { ...item, quantity: 0 }), map),
-        {},
-      )
-      splitedOrders = splitedOrders.map((orders, idx) => {
-        const idMap = JSON.parse(JSON.stringify(itemsMap))
-        orders.forEach((order) => {
-          let { orderItemId } = order
-          let existingOrder = idMap[orderItemId]
-          idMap[orderItemId].quantity++
-        })
-        let arr = Object.values(idMap)
-        return { items: arr }
-      })
+      const e1 = new TypeError('xxx')
 
-      console.log(`splitedOrders====`, splitedOrders)
+      const e2 = getCloneError(e1)
+
+      console.log(e2)
     </script>
   </body>
 </html>

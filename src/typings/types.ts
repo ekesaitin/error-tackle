@@ -118,3 +118,5 @@ export const enum AJAX_ERROR_TYPE {
   FETCH_ERROR = 'FetchError',
   XHR_ERROR = 'XHRError',
 }
+
+export const FETCH_URL_END = '#$$__FETCH_URL_END'
