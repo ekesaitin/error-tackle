@@ -10,7 +10,8 @@
     "dev": "rollup -c -w -m",
     "build": "rimraf dist && rollup -c",
     "test": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "X贰伍伍",
@@ -23,6 +24,7 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@types/jest": "^27.0.2",
+    "husky": "^7.0.4",
     "jest": "^27.3.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.58.3",
