@@ -14,9 +14,10 @@ const getErrInfoWithSource = (target: ErrorInfo, stack: string): ErrorInfo => {
   }
 }
 
-const getErrorType = (e: ErrorEvent | PromiseRejectionEvent) => {
+const getErrorType = (e: ErrorEvent | PromiseRejectionEvent | unknown): string => {
   if (e instanceof ErrorEvent) return e.error?.name
   else if (e instanceof PromiseRejectionEvent) return e.type
+  else return 'unknown'
 }
 
 const getJsError = (e: ErrorEvent): ErrorInfo => {

@@ -38,7 +38,7 @@ describe('createTackle', () => {
     const wholeOptions: TackleOptions = {
       url: 'xxxxx.com/xxx',
       method: 'POST',
-      logError: false,
+      logError: true,
       jsError: false,
       promiseError: false,
       resourceError: false,
@@ -50,7 +50,7 @@ describe('createTackle', () => {
           errorHandler() {},
         },
       },
-      coverError: false,
+      coverError: true,
       extendsData: {
         token: 'xxx-xxxx-xx',
         user: {

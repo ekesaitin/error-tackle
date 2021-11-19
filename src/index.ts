@@ -6,15 +6,15 @@ import { TackleOptions } from './typings/types'
 export const defaultOptions: TackleOptions = {
   url: '',
   method: 'IMG',
-  logError: true,
   jsError: true,
   promiseError: true,
   resourceError: true,
-  consoleError: false,
   ajaxError: true,
+  consoleError: false,
   vueError: false,
   vueApp: null,
-  coverError: true,
+  logError: false,
+  coverError: false,
   extendsData: null,
   onError: null,
 }
