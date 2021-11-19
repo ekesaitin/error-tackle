@@ -34,7 +34,7 @@ export const createReporter =
       ...(extendsData ? { extendsData } : false),
     }
 
-    logError && coverError && console.log(report.error)
+    logError && coverError && console.log('error-tackle===', report.error)
     if (url && isUrl(url)) reportError(url, method, report)
     onError?.(info)
   }
