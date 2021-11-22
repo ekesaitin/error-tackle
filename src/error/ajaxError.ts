@@ -1,12 +1,6 @@
 import { getErrorInfo } from 'src/error/parseErrorInfo'
-import {
-  AJAX_ERROR_TYPE,
-  ERROR_TYPE,
-  FETCH_URL_END,
-  Reporter,
-  StackMap,
-  TackleOptions,
-} from 'src/typings/types'
+import { isReporting } from 'src/report'
+import { AJAX_ERROR_TYPE, ERROR_TYPE, Reporter, StackMap, TackleOptions } from 'src/typings/types'
 import { isString, noop } from 'src/utils'
 
 const getCloneError = <T extends Error>(error: T): T => {
@@ -100,13 +94,7 @@ const rewriteFetch = (reporter: Reporter) => {
      * 标识是否是由reporter发出的请求
      * 如果是，则不进行错误捕获
      */
-    let isReportFetch = false
-    if (isString(input)) {
-      if (input.endsWith(FETCH_URL_END)) {
-        isReportFetch = true
-        input = input.replace(FETCH_URL_END, '')
-      }
-    }
+    const isReportFetch = isReporting
 
     return (
       _oldFetch

@@ -1,5 +1,7 @@
-import { ErrorInfo, FETCH_URL_END, Method, Reporter, TackleOptions } from 'src/typings/types'
+import { ErrorInfo, Method, Reporter, TackleOptions } from 'src/typings/types'
 import { isUrl, obj2query } from 'src/utils'
+
+export let isReporting = false
 
 export const fetchImg = (url: string, data: ErrorInfo) => {
   let query = obj2query(data)
@@ -10,13 +12,15 @@ export const fetchImg = (url: string, data: ErrorInfo) => {
 export const fetchData = (url: string, method: Method, info: ErrorInfo) => {
   let query = obj2query(info)
   url = method === 'GET' ? url + query : url
-  fetch(url + FETCH_URL_END, {
+  isReporting = true
+  fetch(url, {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
     ...(method === 'POST' && { body: JSON.stringify(info) }),
   })
+  isReporting = false
 }
 
 export const reportError = (url: string, method: Method, info: ErrorInfo) => {
