@@ -18,15 +18,15 @@ export interface TackleOptions {
   /** 是否监听vue错误 */
   vueError?: boolean
   /** vue应用实例 */
-  vueApp?: VueApp | null
-  /** 是否在控制台打印错误 */
-  logError?: boolean
+  vueApp?: VueApp
   /** 是否阻止错误继续向上传播 */
   coverError?: boolean
+  /** 是否在控制台打印错误（如果要打印则需要coverError也为true） */
+  logError?: boolean
   /** 上报信息需要额外携带的数据 */
   extendsData?: any
   /** 捕获到错误时会执行的方法 */
-  onError?: null | ((info: ErrorInfo) => void)
+  onError?: (info: ErrorInfo) => void
 }
 
 export type VueErrorHandler = (err: any, vm: AnyObject, info: string) => void

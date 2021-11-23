@@ -12,11 +12,11 @@ export const defaultOptions: TackleOptions = {
   ajaxError: true,
   consoleError: false,
   vueError: false,
-  vueApp: null,
+  vueApp: undefined,
   logError: false,
   coverError: false,
   extendsData: null,
-  onError: null,
+  onError: undefined,
 }
 
 const getOptions = <T extends Object>(options?: T): TackleOptions => {
