@@ -38,7 +38,6 @@ describe('createTackle', () => {
     const wholeOptions: TackleOptions = {
       url: 'xxxxx.com/xxx',
       method: 'POST',
-      logError: true,
       jsError: false,
       promiseError: false,
       resourceError: false,
@@ -50,6 +49,7 @@ describe('createTackle', () => {
           errorHandler() {},
         },
       },
+      logError: true,
       coverError: true,
       extendsData: {
         token: 'xxx-xxxx-xx',
@@ -65,7 +65,12 @@ describe('createTackle', () => {
       url: 'xxxxx.com/xxx',
       method: 'POST',
       extendsData: 1010101010,
+      logError: true,
+      coverError: true,
+      consoleError: true,
     }
+
+    const expectOptions = { ...defaultOptions, ...partialOptions }
 
     createTackle({})
     createTackle(wholeOptions)
@@ -73,10 +78,10 @@ describe('createTackle', () => {
     expect(createErrorTackle).toBeCalledTimes(3)
     expect(createErrorTackle.mock.calls[0][0]).toEqual(defaultOptions)
     expect(createErrorTackle.mock.calls[1][0]).toEqual(wholeOptions)
-    expect(createErrorTackle.mock.calls[2][0]).toMatchSnapshot()
+    expect(createErrorTackle.mock.calls[2][0]).toEqual(expectOptions)
     expect(createReporter).toBeCalledTimes(3)
     expect(createReporter.mock.calls[0][0]).toEqual(defaultOptions)
     expect(createReporter.mock.calls[1][0]).toEqual(wholeOptions)
-    expect(createReporter.mock.calls[2][0]).toMatchSnapshot()
+    expect(createReporter.mock.calls[2][0]).toEqual(expectOptions)
   })
 })

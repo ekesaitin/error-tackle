@@ -1,4 +1,4 @@
-import { getDateTime } from 'src/utils'
+import { getDateTime } from '../date'
 
 describe('utils-date', () => {
   test('data', () => {
