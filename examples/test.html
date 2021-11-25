@@ -8,21 +8,63 @@
   </head>
   <body>
     <script>
-      const getCloneError = (error) => {
-        if (error instanceof Error) {
-          const Constructor = error.constructor
-          const newError = new Constructor(error)
-          Error.captureStackTrace(newError, getCloneError)
-          return newError
-        } else {
-          return error
+      function wait(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms || 1))
+      }
+
+      const compose = (middleware) => (ctx, next) => {
+        let index = -1
+        return dispatch(0)
+
+        function dispatch(i) {
+          if (i <= index) return Promise.reject(new Error('next() called multiple times'))
+          index = i
+
+          let fn = i === middleware.length ? next : middleware[i]
+          if (!fn) return Promise.resolve()
+
+          try {
+            return Promise.resolve(fn(ctx, dispatch.bind(null, i + 1)))
+          } catch (err) {
+            return Promise.reject(err)
+          }
         }
       }
-      const e1 = new TypeError('xxx')
 
-      const e2 = getCloneError(e1)
+      const arr = []
+      const stack = []
 
-      console.log(e2)
+      stack.push(async (context, next) => {
+        arr.push(1)
+        await wait(1)
+        await next()
+        await wait(1)
+        arr.push(6)
+      })
+
+      stack.push(async (context, next) => {
+        arr.push(2)
+        await wait(1)
+        await next()
+        await wait(1)
+        arr.push(5)
+      })
+
+      stack.push(async (context, next) => {
+        arr.push(3)
+        await wait(1)
+        await next()
+        await wait(1)
+        arr.push(4)
+      })
+
+      compose(stack)()
+        .then(() => {
+          console.log(arr)
+        })
+        .catch((err) => {
+          console.log('err===', err)
+        })
     </script>
   </body>
 </html>
